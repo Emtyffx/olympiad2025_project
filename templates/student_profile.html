@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Профіль учня
+{% endblock %}
+
+{% block content %}
+<header class="header" id="header">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-3 col-md-4 col-lg-2">
+                <a href="{{ url_for('index') }}">
+                    <img class="img-fluid logo" src="{{ url_for('static', filename='img/low.png') }}" alt="logo">
+                </a>
+            </div>
+            <!-- Поле пошуку -->
+            <div class="col-9 serh d-lg-flex col-md-8 col-lg-7 flex items-center">
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Пошук..." class="search-input" id="searchInput" />
+                    <button class="search-button" onclick="handleSearch()">🔍</button>
+                </div>
+            </div>
+            <div class="col-12 reg-in col-md-12 d-lg-flex col-lg-3 justify-content-end align-items-center menu-collapse">
+                <!-- Меню -->
+                <nav class="menu">
+                    <ul class="menu__list d-flex">
+                        <li class="menu__item">
+                            <a href="{{ url_for('index') }}" class="menu__home">Головна</a>
+                        </li>
+                        <li class="menu__item">
+                            <a class="menu__cabinet" href="{{ url_for('home') }}">Профіль</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="cal-3">
+    <div class="container">
+        <div class="row">
+            <div class="center col-12 col-lg-6"> 
+                <div class="students">
+                    <div class="students-title">
+                        <h2>Клас {{ student.clas }}</h2>
+                    </div>
+                </div>
+                <div class="desk-main">
+                    <div class="img-main">
+                        <img src="{{ url_for('static', filename='img/168724.png') }}" class="avatar" alt="">
+                    </div>
+                    <div class="text-main">
+                        <p class="date-main">Дата народження:<span class="date-main-main">01.01.2001</span></p>
+                        <p class="desk-main-text">Про себе:</p>
+                        <p class="desk-main-text-text">Характеристика на учня - це документ, 
+                            який являє собою оцінку соціальних, 
+                            психологічних та інших особистих 
+                            якостей, рис характеру школяра. 
+                            Характеристика учня складається для 
+                            нового викладача з метою знаходження 
+                            індивідуального підходу до нього і 
+                            налагодження роботи з ним чи для 
+                            надання в інший навчальний заклад.
+                        </p>
+                    </div>
+                </div>
+            </div>    
+            <div class="center d-flex col-12 col-lg-6"> 
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button id="btnPrev" type="button">Попередній</button>
+                        <span id="monthYear"></span>
+                        <button id="btnNext" type="button">Наступний</button>
+                    </div>
+                    <div id="divCal" class="calendar-table"></div>
+                    <div class="calendar-buttons">
+                        <a href="#" class="podii-2">Всі події цього місяця</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="rating-and-comment">
+    <div class="header-back"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Особисте завдання:<span class="titel-h3">строк виконання</span><span class="title-date">25.05.2025</span></h3>
+                <p id="personal-assignment-description">
+                    Для виконання завдання, необхідно створити лендінг – пейдж сторінку, яка має за мету інформування користувачів про 
+                    останні досягнення в галузі дослідження штучного інтелекту. Весь необхідний матеріал, для наповнення сайту відповідним
+                    контентом розміщений у папці «Матеріал». Приклади вже створених сторінок можна побачити в папці «Приклади».
+<br>
+                    Всі результати збережіть, будь ласка, на локальному диску D, в папку «Прізвище ім'я» (власне П.І.). Потрібні матеріали для 
+                    створення сайту скопіюйте з папки із завданням, тому що деякі з них містять підготовлений контент.
+<br>
+                    При виконанні завдань можна користуватися таким програмним забезпеченням (ПЗ): Блокнот, Notepad++, Sublime Text, 
+                    Photoshop, Paint, Paint 3D, Denwer, Wordpress. При написанні текстових файлів (HTML/XHTML, CSS, JS, PHP) керуйтесь 
+                    веб-стандартами.
+<br>
+                    Крім того, під час перевірки буде враховуватися чистота коду і доступність (зручність). Загальний стиль сайту повинен 
+                    бути діловим та сучасним. Не забувайте про верстку, сторінка повинна легко читатися: списки, короткі абзаци, відступи, 
+                    інфографіка замість довгого тексту.
+                </p>
+                <h3 class="teacher-evaluation">Оцінка за завдання <span class="grade-2">12</span></h3>    
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="rating-and-comment-gr">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Гуртове завдання:<span class="titel-h3">строк виконання</span><span class="title-date">15.05.2025</span></h3>
+                <p id="group-assignment-description">
+                    Для виконання завдання, необхідно створити лендінг – пейдж сторінку, яка має за мету інформування користувачів про 
+                    останні досягнення в галузі дослідження штучного інтелекту. Весь необхідний матеріал, для наповнення сайту відповідним
+                    контентом розміщений у папці «Матеріал». Приклади вже створених сторінок можна побачити в папці «Приклади».
+<br>
+                    Всі результати збережіть, будь ласка, на локальному диску D, в папку «Прізвище ім'я» (власне П.І.). Потрібні матеріали для 
+                    створення сайту скопіюйте з папки із завданням, тому що деякі з них містять підготовлений контент.
+<br>
+                    При виконанні завдань можна користуватися таким програмним забезпеченням (ПЗ): Блокнот, Notepad++, Sublime Text, 
+                    Photoshop, Paint, Paint 3D, Denwer, Wordpress. При написанні текстових файлів (HTML/XHTML, CSS, JS, PHP) керуйтесь 
+                    веб-стандартами.
+<br>
+                    Крім того, під час перевірки буде враховуватися чистота коду і доступність (зручність). Загальний стиль сайту повинен 
+                    бути діловим та сучасним. Не забувайте про верстку, сторінка повинна легко читатися: списки, короткі абзаци, відступи, 
+                    інфографіка замість довгого тексту.
+                </p>
+                <h3 class="teacher-evaluation">Оцінка за завдання <span class="grade-2">8</span></h3>    
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block ModalWindows %}
+<!-- Модальні вікна -->
+<div style="display: none;">
+    <div class="box-modal" id="exampleModal-12">
+        <div class="box-modal_close arcticmodal-close"><img src="{{ url_for('static', filename='img/close.png') }}" class="close"></div>
+        <div>
+            <div class="date">
+                <p id="selectedDate"></p>
+            </div>
+            <div class="desc-date" id="eventDetails">
+                <p>Події відсутні</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <div class="box-modal" id="exampleModal-13">
+        <div class="box-modal_close arcticmodal-close"><img src="{{ url_for('static', filename='img/close.png') }}" class="close"></div>
+        <div class="date">
+            <p id="currentMonth"></p>
+        </div>
+        <ul class="list-event" id="eventList"></ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var Cal = function(divId) {
+        this.divId = divId;
+        this.DaysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+        this.Months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+        var d = new Date();
+        this.currMonth = d.getMonth();
+        this.currYear = d.getFullYear();
+        this.currDay = d.getDate();
+        this.events = [];
+    };
+
+    Cal.prototype.fetchEvents = async function() {
+        try {
+            const response = await fetch('/api/events', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            this.events = await response.json();
+            console.log('Події з API:', this.events);
+        } catch (error) {
+            console.error('Помилка при отриманні подій:', error);
+        }
+    };
+
+    Cal.prototype.nextMonth = function() {
+        if (this.currMonth == 11) {
+            this.currMonth = 0;
+            this.currYear = this.currYear + 1;
+        } else {
+            this.currMonth = this.currMonth + 1;
+        }
+        this.showcurr();
+    };
+
+    Cal.prototype.previousMonth = function() {
+        if (this.currMonth == 0) {
+            this.currMonth = 11;
+            this.currYear = this.currYear - 1;
+        } else {
+            this.currMonth = this.currMonth - 1;
+        }
+        this.showcurr();
+    };
+
+    Cal.prototype.showcurr = function() {
+        this.showMonth(this.currYear, this.currMonth);
+    };
+
+    Cal.prototype.showMonth = function(y, m) {
+        var d = new Date();
+        var firstDayOfMonth = new Date(y, m, 7).getDay();
+        var lastDateOfMonth = new Date(y, m + 1, 0).getDate();
+        var lastDayOfLastMonth = m == 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
+
+        document.getElementById('monthYear').textContent = this.Months[m] + ' ' + y;
+
+        var html = '<table>';
+        html += '<tr class="days">';
+        for (var i = 0; i < this.DaysOfWeek.length; i++) {
+            html += '<td>' + this.DaysOfWeek[i] + '</td>';
+        }
+        html += '</tr>';
+
+        var i = 1;
+        do {
+            var dow = new Date(y, m, i).getDay();
+            if (dow == 1) {
+                html += '<tr>';
+            } else if (i == 1) {
+                html += '<tr>';
+                var k = lastDayOfLastMonth - firstDayOfMonth + 1;
+                for (var j = 0; j < firstDayOfMonth; j++) {
+                    html += '<td class="not-current">' + k + '</td>';
+                    k++;
+                }
+            }
+
+            var currentDate = new Date(y, m, i);
+            var eventsForDay = this.events.filter(event => {
+                var eventDate = new Date(event.date);
+                return eventDate.getFullYear() === y &&
+                       eventDate.getMonth() === m &&
+                       eventDate.getDate() === i;
+            });
+
+            var hasEvent = eventsForDay.length > 0;
+            var isPastEvent = false;
+            if (hasEvent) {
+                const now = new Date();
+                isPastEvent = eventsForDay.every(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate < now;
+                });
+            }
+
+            var chk = new Date();
+            var chkY = chk.getFullYear();
+            var chkM = chk.getMonth();
+            if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
+                html += `<td class="today${hasEvent ? (isPastEvent ? ' past-event-day' : ' event-day') : ''}"><a href="#" class="but-block but-block-${i}" onclick="calendarInstance.showDayEvents(${y}, ${m}, ${i}); return false;">${i}</a></td>`;
+            } else {
+                html += `<td class="normal${hasEvent ? (isPastEvent ? ' past-event-day' : ' event-day') : ''}"><a href="#" class="but-block but-block-${i}" onclick="calendarInstance.showDayEvents(${y}, ${m}, ${i}); return false;">${i}</a></td>`;
+            }
+
+            if (dow == 0) {
+                html += '</tr>';
+            } else if (i == lastDateOfMonth) {
+                var k = 1;
+                for (dow; dow < 7; dow++) {
+                    html += '<td class="not-current">' + k + '</td>';
+                    k++;
+                }
+            }
+            i++;
+        } while (i <= lastDateOfMonth);
+
+        html += '</table>';
+        document.getElementById(this.divId).innerHTML = html;
+    };
+
+    Cal.prototype.showDayEvents = function(year, month, day) {
+        const selectedDate = new Date(year, month, day);
+        const dayOfWeek = this.DaysOfWeek[selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1];
+        const dateStr = `${day} ${this.Months[month].toUpperCase()} ${year} - ${dayOfWeek}`;
+        document.getElementById('selectedDate').textContent = dateStr;
+
+        const eventsOnDay = this.events.filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getFullYear() === year &&
+                   eventDate.getMonth() === month &&
+                   eventDate.getDate() === day;
+        });
+
+        const eventContainer = document.getElementById('eventDetails');
+        eventContainer.innerHTML = '';
+
+        if (eventsOnDay.length > 0) {
+            eventsOnDay.forEach(event => {
+                const eventDate = new Date(event.date);
+                const timeStr = eventDate.toTimeString().slice(0, 5);
+                const eventHtml = `
+                    <div>
+                        <h2 class="event-title">${event.title || 'Без назви'}</h2>
+                        <p class="event-desc">Час проведення: ${timeStr}</p>
+                    </div>
+                `;
+                eventContainer.innerHTML += eventHtml;
+            });
+        } else {
+            eventContainer.innerHTML = `
+                <p>Не заплановано ніяких подій</p>
+            `;
+        }
+
+        try {
+            $.arcticmodal({
+                content: '#exampleModal-12'
+            });
+        } catch (error) {
+            console.error('Помилка при відкритті модального вікна (#exampleModal-12):', error);
+            alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+        }
+    };
+
+    Cal.prototype.showAllEvents = function() {
+        document.getElementById('currentMonth').textContent = 
+            this.Months[this.currMonth] + ' ' + this.currYear;
+
+        const eventList = document.getElementById('eventList');
+        eventList.innerHTML = '';
+
+        const daysInMonth = new Date(this.currYear, this.currMonth + 1, 0).getDate();
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const eventsForDay = this.events.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate.getFullYear() === this.currYear &&
+                       eventDate.getMonth() === this.currMonth &&
+                       eventDate.getDate() === day;
+            });
+
+            const li = document.createElement('li');
+            li.classList.add('event-item');
+            if (eventsForDay.length > 0) {
+                li.classList.add('activ-event-day');
+                const now = new Date();
+                const isPastEvent = eventsForDay.every(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate < now;
+                });
+                li.classList.add(isPastEvent ? 'past' : 'future');
+                eventsForDay.forEach(event => {
+                    const eventDate = new Date(event.date);
+                    const hours = String(eventDate.getHours()).padStart(2, '0');
+                    const minutes = String(eventDate.getMinutes()).padStart(2, '0');
+                    const time = `${hours}:${minutes}`;
+                    const eventLi = document.createElement('div');
+                    eventLi.classList.add('event-subitem');
+                    eventLi.innerHTML = `
+                        <p>${day} - ${event.title || 'Без назви'} (${time})</p>
+                    `;
+                    li.appendChild(eventLi);
+                });
+            } else {
+                li.classList.add('event-absent');
+                li.innerHTML = `<p>${day}</p><p>Не заплановано ніяка подія</p>`;
+            }
+            eventList.appendChild(li);
+        }
+
+        try {
+            $.arcticmodal({
+                content: '#exampleModal-13'
+            });
+        } catch (error) {
+            console.error('Помилка при відкритті модального вікна (#exampleModal-13):', error);
+            alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+        }
+    };
+
+    // Ініціалізація календаря
+    const calendarInstance = new Cal('divCal');
+
+    // Завантажуємо події та відображаємо календар
+    calendarInstance.fetchEvents().then(() => {
+        calendarInstance.showcurr();
+    });
+
+    // Прив’язка подій до кнопок
+    document.getElementById('btnPrev').addEventListener('click', () => calendarInstance.previousMonth());
+    document.getElementById('btnNext').addEventListener('click', () => calendarInstance.nextMonth());
+    document.querySelector('.podii-2').addEventListener('click', (e) => {
+        e.preventDefault();
+        calendarInstance.showAllEvents();
+    });
+</script>
+{% endblock %}

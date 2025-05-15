@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календар подій</title>
+    
+    <style>
+        body {
+            margin: 40px;
+            font-family: Arial, sans-serif;
+        }
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .event-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .event-form.show {
+            display: block;
+        }
+        .event-form input, .event-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        .event-form button {
+            padding: 8px 16px;
+            margin-right: 8px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .overlay.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <div id="calendar"></div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="event-form" id="eventForm">
+        <h3 id="formTitle">Додати подію</h3>
+        <input type="hidden" id="eventId">
+        <input type="text" id="eventTitle" placeholder="Назва події" required>
+        <textarea id="eventDescription" placeholder="Опис події"></textarea>
+        <input type="datetime-local" id="eventDate" required>
+        <button onclick="saveEvent()">Зберегти</button>
+        <button onclick="closeForm()">Скасувати</button>
+        <button onclick="deleteEvent()" id="deleteButton" style="display: none; background-color: #ff4444;">Видалити</button>
+    </div>
+
+    <script>
+        let calendar;
+        let currentEvent = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                locale: 'uk',
+                selectable: true,
+                select: function(info) {
+                    showEventForm(null, info.start);
+                },
+                eventClick: function(info) {
+                    showEventForm(info.event);
+                },
+                events: '/api/events'
+            });
+            calendar.render();
+        });
+
+        function showEventForm(event, defaultDate = new Date()) {
+            currentEvent = event;
+            const form = document.getElementById('eventForm');
+            const overlay = document.getElementById('overlay');
+            const deleteButton = document.getElementById('deleteButton');
+            
+            document.getElementById('formTitle').textContent = event ? 'Редагувати подію' : 'Додати подію';
+            document.getElementById('eventId').value = event ? event.id : '';
+            document.getElementById('eventTitle').value = event ? event.title : '';
+            document.getElementById('eventDescription').value = event ? event.extendedProps.description : '';
+            
+            const dateStr = event 
+                ? event.start.toISOString().slice(0, 16)
+                : defaultDate.toISOString().slice(0, 16);
+            document.getElementById('eventDate').value = dateStr;
+            
+            deleteButton.style.display = event ? 'inline-block' : 'none';
+            
+            form.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        function closeForm() {
+            const form = document.getElementById('eventForm');
+            const overlay = document.getElementById('overlay');
+            form.classList.remove('show');
+            overlay.classList.remove('show');
+            currentEvent = null;
+        }
+
+        async function saveEvent() {
+            const eventId = document.getElementById('eventId').value;
+            const title = document.getElementById('eventTitle').value;
+            const description = document.getElementById('eventDescription').value;
+            const date = document.getElementById('eventDate').value;
+
+            const eventData = {
+                title: title,
+                description: description,
+                date: new Date(date).toISOString().slice(0, 19).replace('T', ' ')
+            };
+
+            try {
+                let response;
+                if (eventId) {
+                    response = await fetch(`/api/events/${eventId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(eventData)
+                    });
+                } else {
+                    response = await fetch('/api/events', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(eventData)
+                    });
+                }
+
+                if (response.ok) {
+                    calendar.refetchEvents();
+                    closeForm();
+                } else {
+                    alert('Помилка при збереженні події');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Помилка при збереженні події');
+            }
+        }
+
+        async function deleteEvent() {
+            if (!currentEvent) return;
+            
+            if (confirm('Ви впевнені, що хочете видалити цю подію?')) {
+                try {
+                    const response = await fetch(`/api/events/${currentEvent.id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        calendar.refetchEvents();
+                        closeForm();
+                    } else {
+                        alert('Помилка при видаленні події');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Помилка при видаленні події');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

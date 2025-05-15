@@ -1,0 +1,76 @@
+/* 992px - 1200px */
+@media screen and (max-width: 1200px) {
+	
+}
+
+/* 768px - 992px */
+@media screen and (max-width: 992px) {
+		input {
+			width: 80%;
+	}
+	.serh {
+		display: flex;
+    justify-content: end;
+	}
+	.reg-in {
+		display: flex;
+	}
+}
+
+
+/* 576px - 768px */
+@media screen and (max-width: 768px) {
+	    input {
+        width: 78%;
+    }
+    .center {
+		justify-content: center;
+    }
+    .slick-slider {
+    	margin-top: 30px !important;
+    	width: 80%;
+    }
+    .copyright{
+    	flex-direction: column;
+    	text-align: center;
+    }
+    .icon-soc {
+    	justify-content: center;
+    	margin: 20px 0px;
+    }
+    h1 {
+    	font-size: 22px;
+    }
+    .offer-desc {
+    	font-size: 17px;
+    }
+
+   .students-title h2 {
+    	margin: 24px 0 0 0;
+    	font-size: 30px;
+    }
+
+}
+
+/* 480px - 576px */
+@media screen and (max-width: 576px) {
+	.box-modal {
+    	width: 430px;
+    }
+
+.example_task-date span  input, .task-gr, .task-grade, .delete, .add-p, .info-in-back {
+    width: 246px;
+ }
+
+.add-p-bl {
+	width: 100%;
+}
+
+}
+
+/* 320px - 480px */
+@media screen and (max-width: 480px) {
+	.box-modal {
+    	width: 280px;
+    }
+}

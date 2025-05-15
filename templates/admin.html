@@ -1,0 +1,1197 @@
+{% extends "base.html" %}
+
+{% block title %}
+    сторінка директора
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <header class="header" id="header">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-3 col-md-4 col-lg-2">
+                    <a href="index">
+                        <img class="img-fluid logo" src="{{url_for('static', filename='img/low.png')}}" alt="logo">
+                    </a>
+                </div>
+                <div class="col-9 serh d-lg-flex col-md-8 col-lg-7 flex items-center">
+                    <div class="search-wrapper">
+                        <input type="text" placeholder="Пошук..." class="search-input" />
+                        <button class="search-button">🔍</button>
+                    </div>
+                </div>
+                <div class="col-12 reg-in col-md-12 d-lg-flex col-lg-3 justify-content-end align-items-center menu-collapse">
+                    <nav class="menu">
+                        <ul class="menu__list d-flex">
+                            <li class="menu__item">
+                                <p>Ім'я Призвіще (<span>Логін</span>)</p>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <!-- Додаємо елемент для повідомлення -->
+        <div id="notification" class="notification" style="display: none;"></div>
+        <div class="row">
+            <!-- Button Column -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="button-column">
+                    <button class="admin-button add-admin">Додати адміністратора</button>
+                    <button class="admin-button delete-admin">Видалити адміністратора</button>
+                    <button class="admin-button add-teacher">Додати вчителя</button>
+                    <button class="admin-button delete-teacher">Видалити вчителя</button>
+                    <button class="admin-button view-rights">Переглянути права користувачів</button>
+                </div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="col-12 col-md-8">
+                <section class="cal-2">
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <button id="btnPrev" type="button">Попередній</button>
+                            <span id="monthYear"></span>
+                            <button id="btnNext" type="button">Наступний</button>
+                        </div>
+                        <div id="divCal" class="calendar-table"></div>
+                        <div class="calendar-buttons">
+                            <a href="#" class="podii-2">Всі події цього місяця</a>
+                            <a href="#" class="admin-general-event">Додати загальну подію</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-3">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <div>
+                <div class="date">
+                    <p>Сюди повинна потрапляти поточна дата</p>
+                </div>
+                <div class="desc-date">
+                    <p>Події відсутні</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-5">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <div class="date">
+                <p id="currentMonth"></p>
+            </div>
+            <ul class="admin-list-event" id="eventList"></ul>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Event -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-10">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 id="formTitle" style="text-align: center;">Додати загальну подію</h2>
+            <div class="form">
+                <input type="hidden" id="eventId">
+                <div class="input-box">
+                    <label>Назва події</label>
+                    <input type="text" id="eventTitle" placeholder="Введіть назву події">
+                </div>
+                <div class="input-box">
+                    <label>Дата і час</label>
+                    <input type="text" id="eventDate" placeholder="Оберіть дату і час">
+                </div>
+                <div class="admin-form-button">
+                    <button onclick="saveEvent(event)">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Admin -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-add-admin">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 style="text-align: center;">Додати адміністратора</h2>
+            <div class="form">
+                <div class="input-box">
+                    <label>Логін</label>
+                    <input type="text" id="adminLogin" placeholder="Введіть логін">
+                </div>
+                <div class="input-box">
+                    <label>Ім'я</label>
+                    <input type="text" id="adminFirstName" placeholder="Введіть ім'я">
+                </div>
+                <div class="input-box">
+                    <label>Прізвище</label>
+                    <input type="text" id="adminLastName" placeholder="Введіть прізвище">
+                </div>
+                <div class="input-box">
+                    <label>Пароль</label>
+                    <input type="password" id="adminPassword" placeholder="Введіть пароль">
+                </div>
+                <div class="admin-form-button">
+                    <button onclick="saveAdmin(event)">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Deleting Admin -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-delete-admin">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 style="text-align: center;">Видалити адміністратора</h2>
+            <div class="form">
+                <div class="input-box">
+                    <label>Ім'я</label>
+                    <input type="text" id="deleteAdminFirstName" placeholder="Введіть ім'я" oninput="checkAdmin()">
+                </div>
+                <div class="input-box">
+                    <label>Прізвище</label>
+                    <input type="text" id="deleteAdminLastName" placeholder="Введіть прізвище" oninput="checkAdmin()">
+                </div>
+                <!-- Елемент для пропозицій -->
+                <div id="adminSuggestions" style="margin-top: 10px; color: #555;"></div>
+                <div class="admin-form-button">
+                    <button id="deleteAdminButton" onclick="deleteAdmin(event)" disabled>Видалити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Teacher -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-add-teacher">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 style="text-align: center;">Додати вчителя</h2>
+            <div class="form">
+                <div class="input-box">
+                    <label>Логін</label>
+                    <input type="text" id="teacherLogin" placeholder="Введіть логін">
+                </div>
+                <div class="input-box">
+                    <label>Ім'я</label>
+                    <input type="text" id="teacherFirstName" placeholder="Введіть ім'я">
+                </div>
+                <div class="input-box">
+                    <label>Прізвище</label>
+                    <input type="text" id="teacherLastName" placeholder="Введіть прізвище">
+                </div>
+                <div class="input-box">
+                    <label>Клас</label>
+                    <select id="teacherClass" name="teacherClass">
+                        <option value="" disabled selected>Оберіть клас</option>
+                        <option value="Комп'ютерний клас">Комп'ютерний клас</option>
+                        <option value="Танцювальний клас">Танцювальний клас</option>
+                        <option value="Кулінарія">Кулінарія</option>
+                        <option value="Англійська мова">Англійська мова</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label>Пароль</label>
+                    <input type="password" id="teacherPassword" placeholder="Введіть пароль">
+                </div>
+                <div class="admin-form-button">
+                    <button onclick="saveTeacher(event)">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Deleting Teacher -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-delete-teacher">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 style="text-align: center;">Видалити вчителя</h2>
+            <div class="form">
+                <div class="input-box">
+                    <label>Ім'я</label>
+                    <input type="text" id="deleteTeacherFirstName" placeholder="Введіть ім'я" oninput="checkTeacher()">
+                </div>
+                <div class="input-box">
+                    <label>Прізвище</label>
+                    <input type="text" id="deleteTeacherLastName" placeholder="Введіть прізвище" oninput="checkTeacher()">
+                </div>
+                <!-- Елемент для пропозицій -->
+                <div id="teacherSuggestions" style="margin-top: 10px; color: #555;"></div>
+                <div class="admin-form-button">
+                    <button id="deleteTeacherButton" onclick="deleteTeacher(event)" disabled>Видалити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing User Rights -->
+    <div style="display: none;">
+        <div class="admin-box-modal" id="exampleModal-view-rights">
+            <div class="admin-box-modal_close arcticmodal-close"><img src="{{url_for('static', filename='img/close.png')}}" class="close"></div>
+            <h2 style="text-align: center;">Права користувачів</h2>
+            <div class="user-rights-list" style="margin-top: 20px;">
+                <ul id="userRightsList" style="list-style-type: none; padding: 0;"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var Cal = function(divId) {
+    this.divId = divId;
+    this.DaysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+    this.Months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+    var d = new Date();
+    this.currMonth = d.getMonth();
+    this.currYear = d.getFullYear();
+    this.currDay = d.getDate();
+    this.events = [];
+};
+
+Cal.prototype.fetchEvents = async function() {
+    try {
+        const response = await fetch('/api/events', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        this.events = await response.json();
+        console.log('Події з API:', this.events);
+    } catch (error) {
+        console.error('Помилка при отриманні подій:', error);
+    }
+};
+
+Cal.prototype.nextMonth = function() {
+    if (this.currMonth == 11) {
+        this.currMonth = 0;
+        this.currYear = this.currYear + 1;
+    } else {
+        this.currMonth = this.currMonth + 1;
+    }
+    this.showcurr();
+};
+
+Cal.prototype.previousMonth = function() {
+    if (this.currMonth == 0) {
+        this.currMonth = 11;
+        this.currYear = this.currYear - 1;
+    } else {
+        this.currMonth = this.currMonth - 1;
+    }
+    this.showcurr();
+};
+
+Cal.prototype.showcurr = function() {
+    this.showMonth(this.currYear, this.currMonth);
+};
+
+Cal.prototype.showMonth = function(y, m) {
+    var d = new Date();
+    var firstDayOfMonth = new Date(y, m, 7).getDay();
+    var lastDateOfMonth = new Date(y, m + 1, 0).getDate();
+    var lastDayOfLastMonth = m == 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
+
+    // Оновлюємо назву місяця та року
+    document.getElementById('monthYear').textContent = this.Months[m] + ' ' + y;
+
+    var html = '<table>';
+    html += '<tr class="days">';
+    for (var i = 0; i < this.DaysOfWeek.length; i++) {
+        html += '<td>' + this.DaysOfWeek[i] + '</td>';
+    }
+    html += '</tr>';
+
+    var i = 1;
+    do {
+        var dow = new Date(y, m, i).getDay();
+        if (dow == 1) {
+            html += '<tr>';
+        } else if (i == 1) {
+            html += '<tr>';
+            var k = lastDayOfLastMonth - firstDayOfMonth + 1;
+            for (var j = 0; j < firstDayOfMonth; j++) {
+                html += '<td class="not-current">' + k + '</td>';
+                k++;
+            }
+        }
+
+        var currentDate = new Date(y, m, i);
+        var eventsForDay = this.events.filter(event => {
+            var eventDate = new Date(event.date);
+            return eventDate.getFullYear() === y &&
+                   eventDate.getMonth() === m &&
+                   eventDate.getDate() === i;
+        });
+
+        var hasEvent = eventsForDay.length > 0;
+        var isPastEvent = false;
+        if (hasEvent) {
+            const now = new Date();
+            isPastEvent = eventsForDay.every(event => {
+                const eventDate = new Date(event.date);
+                return eventDate < now;
+            });
+        }
+
+        var chk = new Date();
+        var chkY = chk.getFullYear();
+        var chkM = chk.getMonth();
+        if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
+            html += `<td class="today${hasEvent ? (isPastEvent ? ' past-event-day' : ' event-day') : ''}"><a href="#" class="but-block but-block-${i}" onclick="calendarInstance.showDayEvents(${y}, ${m}, ${i}); return false;">${i}</a></td>`;
+        } else {
+            html += `<td class="normal${hasEvent ? (isPastEvent ? ' past-event-day' : ' event-day') : ''}"><a href="#" class="but-block but-block-${i}" onclick="calendarInstance.showDayEvents(${y}, ${m}, ${i}); return false;">${i}</a></td>`;
+        }
+
+        if (dow == 0) {
+            html += '</tr>';
+        } else if (i == lastDateOfMonth) {
+            var k = 1;
+            for (dow; dow < 7; dow++) {
+                html += '<td class="not-current">' + k + '</td>';
+                k++;
+            }
+        }
+        i++;
+    } while (i <= lastDateOfMonth);
+
+    html += '</table>';
+    document.getElementById(this.divId).innerHTML = html;
+};
+
+Cal.prototype.showDayEvents = function(year, month, day) {
+    const selectedDate = new Date(year, month, day);
+    const dayOfWeek = this.DaysOfWeek[selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1];
+    const dateStr = `${day} ${this.Months[month].toUpperCase()} ${year} - ${dayOfWeek}`;
+    document.querySelector('#exampleModal-3 .date p').textContent = dateStr;
+
+    const eventsOnDay = this.events.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate.getFullYear() === year &&
+               eventDate.getMonth() === month &&
+               eventDate.getDate() === day;
+    });
+
+    const eventContainer = document.querySelector('#exampleModal-3 .desc-date');
+    eventContainer.innerHTML = '';
+
+    if (eventsOnDay.length > 0) {
+        eventsOnDay.forEach(event => {
+            const eventDate = new Date(event.date);
+            const timeStr = eventDate.toTimeString().slice(0, 5);
+            const eventHtml = `
+                <div>
+                    <h2 class="event-title">${event.title || 'Без назви'}</h2>
+                    <p class="event-desc">Час проведення: ${timeStr}</p>
+                </div>
+            `;
+            eventContainer.innerHTML += eventHtml;
+        });
+    } else {
+        eventContainer.innerHTML = `
+            <p>Не заплановано ніяких подій</p>
+        `;
+    }
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-3'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-3):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+};
+
+Cal.prototype.showAllEvents = function() {
+    document.getElementById('currentMonth').textContent = 
+        this.Months[this.currMonth] + ' ' + this.currYear;
+
+    const eventList = document.getElementById('eventList');
+    eventList.innerHTML = '';
+
+    const daysInMonth = new Date(this.currYear, this.currMonth + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const eventsForDay = this.events.filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getFullYear() === this.currYear &&
+                   eventDate.getMonth() === this.currMonth &&
+                   eventDate.getDate() === day;
+        });
+
+        const li = document.createElement('li');
+        li.classList.add('event-item');
+        if (eventsForDay.length > 0) {
+            li.classList.add('event-present');
+            const now = new Date();
+            const isPastEvent = eventsForDay.every(event => {
+                const eventDate = new Date(event.date);
+                return eventDate < now;
+            });
+            li.classList.add(isPastEvent ? 'past' : 'future');
+            eventsForDay.forEach(event => {
+                const eventDate = new Date(event.date);
+                const hours = String(eventDate.getHours()).padStart(2, '0');
+                const minutes = String(eventDate.getMinutes()).padStart(2, '0');
+                const time = `${hours}:${minutes}`;
+                const eventLi = document.createElement('div');
+                eventLi.classList.add('event-subitem');
+                eventLi.innerHTML = `
+                    <p>${day} - ${event.title || 'Без назви'} (${time})</p>
+                    <button class="delete-btn" onclick="deleteEvent('${event.id}')">🗑️ Видалити</button>
+                `;
+                li.appendChild(eventLi);
+            });
+        } else {
+            li.classList.add('event-absent');
+            li.innerHTML = `<p>${day}</p><p>Не заплановано ніяка подія</p>`;
+        }
+        eventList.appendChild(li);
+    }
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-5'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-5):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+};
+
+function showEventForm() {
+    document.getElementById('formTitle').textContent = 'Додати загальну подію';
+    document.getElementById('formTitle').dataset.mode = 'add';
+    document.getElementById('eventId').value = '';
+    document.getElementById('eventTitle').value = '';
+
+    flatpickr("#eventDate", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        defaultDate: new Date(),
+        time_24hr: true,
+        minuteIncrement: 1,
+        locale: { firstDayOfWeek: 1 }
+    });
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-10'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-10):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+}
+
+function showAddAdminForm() {
+    // Скидаємо значення полів форми
+    document.getElementById('adminLogin').value = '';
+    document.getElementById('adminFirstName').value = '';
+    document.getElementById('adminLastName').value = '';
+    document.getElementById('adminPassword').value = '';
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-add-admin'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-add-admin):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+}
+
+function showDeleteAdminForm() {
+    // Скидаємо значення полів форми
+    document.getElementById('deleteAdminFirstName').value = '';
+    document.getElementById('deleteAdminLastName').value = '';
+    document.getElementById('deleteAdminButton').disabled = true;
+
+    // Скидаємо стилі полів
+    const firstNameInput = document.getElementById('deleteAdminFirstName');
+    const lastNameInput = document.getElementById('deleteAdminLastName');
+    firstNameInput.style.backgroundColor = '';
+    lastNameInput.style.backgroundColor = '';
+
+    // Очищаємо пропозиції
+    document.getElementById('adminSuggestions').innerHTML = '';
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-delete-admin'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-delete-admin):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+}
+
+function showAddTeacherForm() {
+    // Скидаємо значення полів форми
+    document.getElementById('teacherLogin').value = '';
+    document.getElementById('teacherFirstName').value = '';
+    document.getElementById('teacherLastName').value = '';
+    document.getElementById('teacherClass').value = '';
+    document.getElementById('teacherPassword').value = '';
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-add-teacher'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-add-teacher):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+}
+
+function showDeleteTeacherForm() {
+    // Скидаємо значення полів форми
+    document.getElementById('deleteTeacherFirstName').value = '';
+    document.getElementById('deleteTeacherLastName').value = '';
+    document.getElementById('deleteTeacherButton').disabled = true;
+
+    // Скидаємо стилі полів
+    const firstNameInput = document.getElementById('deleteTeacherFirstName');
+    const lastNameInput = document.getElementById('deleteTeacherLastName');
+    firstNameInput.style.backgroundColor = '';
+    lastNameInput.style.backgroundColor = '';
+
+    // Очищаємо пропозиції
+    document.getElementById('teacherSuggestions').innerHTML = '';
+
+    try {
+        $.arcticmodal({
+            content: '#exampleModal-delete-teacher'
+        });
+    } catch (error) {
+        console.error('Помилка при відкритті модального вікна (#exampleModal-delete-teacher):', error);
+        alert('Не вдалося відкрити модальне вікно. Перевірте консоль для деталей.');
+    }
+}
+
+async function showUserRights() {
+    try {
+        // Очищаємо список перед завантаженням нових даних
+        const userRightsList = document.getElementById('userRightsList');
+        userRightsList.innerHTML = '';
+
+        // Отримуємо вчителів
+        const teachersResponse = await fetch('/api/teachers', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!teachersResponse.ok) {
+            throw new Error('Помилка при отриманні списку вчителів');
+        }
+
+        const teachers = await teachersResponse.json();
+
+        // Отримуємо адміністраторів
+        const adminsResponse = await fetch('/api/admins', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!adminsResponse.ok) {
+            throw new Error('Помилка при отриманні списку адміністраторів');
+        }
+
+        const admins = await adminsResponse.json();
+
+        // Об'єднуємо списки
+        const allUsers = [...teachers, ...admins];
+
+        if (allUsers.length === 0) {
+            userRightsList.innerHTML = '<li>Користувачі відсутні</li>';
+        } else {
+            allUsers.forEach(user => {
+                const li = document.createElement('li');
+                li.style.padding = '5px 0';
+                li.textContent = `${user.firstName} ${user.lastName} - ${user.role}`;
+                userRightsList.appendChild(li);
+            });
+        }
+
+        // Відкриваємо модальне вікно
+        $.arcticmodal({
+            content: '#exampleModal-view-rights'
+        });
+    } catch (error) {
+        console.error('Помилка при отриманні прав користувачів:', error);
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = 'Помилка при отриманні прав користувачів';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+async function checkAdmin() {
+    const firstName = document.getElementById('deleteAdminFirstName').value.trim();
+    const lastName = document.getElementById('deleteAdminLastName').value.trim();
+    const firstNameInput = document.getElementById('deleteAdminFirstName');
+    const lastNameInput = document.getElementById('deleteAdminLastName');
+    const deleteButton = document.getElementById('deleteAdminButton');
+    const suggestionsDiv = document.getElementById('adminSuggestions');
+
+    // Очищаємо попередні стилі та пропозиції
+    firstNameInput.style.backgroundColor = '';
+    lastNameInput.style.backgroundColor = '';
+    deleteButton.disabled = true;
+    suggestionsDiv.innerHTML = '';
+
+    if (!firstName || !lastName) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/admins/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName: firstName, lastName: lastName })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.found) {
+            // Адміністратор знайдений, фарбуємо поля в зелений
+            firstNameInput.style.backgroundColor = '#d4edda';
+            lastNameInput.style.backgroundColor = '#d4edda';
+            deleteButton.disabled = false;
+        } else {
+            // Адміністратор не знайдений, фарбуємо поля в червоний
+            firstNameInput.style.backgroundColor = '#f8d7da';
+            lastNameInput.style.backgroundColor = '#f8d7da';
+            deleteButton.disabled = true;
+
+            // Показуємо пропозиції, якщо вони є
+            if (result.suggestions && result.suggestions.length > 0) {
+                let suggestionsHtml = '<p>Можливо, ви мали на увазі:</p><ul>';
+                result.suggestions.forEach(suggestion => {
+                    suggestionsHtml += `<li style="cursor: pointer; color: #007bff;" onclick="fillAdminFields('${suggestion.firstName}', '${suggestion.lastName}')">${suggestion.firstName} ${suggestion.lastName}</li>`;
+                });
+                suggestionsHtml += '</ul>';
+                suggestionsDiv.innerHTML = suggestionsHtml;
+            }
+        }
+    } catch (error) {
+        console.error('Помилка при перевірці адміністратора:', error);
+        firstNameInput.style.backgroundColor = '#f8d7da';
+        lastNameInput.style.backgroundColor = '#f8d7da';
+        deleteButton.disabled = true;
+    }
+}
+
+// Функція для заповнення полів при виборі пропозиції для адміністратора
+function fillAdminFields(firstName, lastName) {
+    document.getElementById('deleteAdminFirstName').value = firstName;
+    document.getElementById('deleteAdminLastName').value = lastName;
+    checkAdmin(); // Повторно перевіряємо
+}
+
+async function deleteAdmin(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('deleteAdminFirstName').value.trim();
+    const lastName = document.getElementById('deleteAdminLastName').value.trim();
+
+    try {
+        const response = await fetch('/api/admins/delete', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName: firstName, lastName: lastName })
+        });
+
+        if (response.ok) {
+            // Закриваємо модальне вікно
+            $.arcticmodal('close');
+
+            // Показуємо повідомлення про успіх
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = 'Адміністратор успішно видалений';
+                notification.style.display = 'block';
+                notification.classList.add('show');
+
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            } else {
+                console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+            }
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Помилка при видаленні адміністратора');
+        }
+    } catch (error) {
+        console.error('Помилка при видаленні адміністратора:', error);
+
+        // Показуємо повідомлення про помилку
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = error.message || 'Помилка при видаленні адміністратора';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+async function saveAdmin(event) {
+    event.preventDefault();
+    
+    const login = document.getElementById('adminLogin').value.trim();
+    const firstName = document.getElementById('adminFirstName').value.trim();
+    const lastName = document.getElementById('adminLastName').value.trim();
+    const password = document.getElementById('adminPassword').value.trim();
+
+    if (!login || !firstName || !lastName || !password) {
+        alert('Будь ласка, заповніть усі обов’язкові поля (логін, ім’я, прізвище, пароль)');
+        return;
+    }
+
+    const adminData = {
+        login: login,
+        firstName: firstName,
+        lastName: lastName,
+        password: password
+    };
+
+    try {
+        const response = await fetch('/api/admins', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(adminData)
+        });
+
+        if (response.ok) {
+            $.arcticmodal('close');
+
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = 'Адміністратор успішно доданий';
+                notification.style.display = 'block';
+                notification.classList.add('show');
+
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            } else {
+                console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+            }
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Помилка при додаванні адміністратора');
+        }
+    } catch (error) {
+        console.error('Помилка при відправці запиту:', error);
+        
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = error.message || 'Помилка при додаванні адміністратора';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+async function checkTeacher() {
+    const firstName = document.getElementById('deleteTeacherFirstName').value.trim();
+    const lastName = document.getElementById('deleteTeacherLastName').value.trim();
+    const firstNameInput = document.getElementById('deleteTeacherFirstName');
+    const lastNameInput = document.getElementById('deleteTeacherLastName');
+    const deleteButton = document.getElementById('deleteTeacherButton');
+    const suggestionsDiv = document.getElementById('teacherSuggestions');
+
+    // Очищаємо попередні стилі та пропозиції
+    firstNameInput.style.backgroundColor = '';
+    lastNameInput.style.backgroundColor = '';
+    deleteButton.disabled = true;
+    suggestionsDiv.innerHTML = '';
+
+    if (!firstName || !lastName) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/teachers/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName: firstName, lastName: lastName })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.found) {
+            // Вчитель знайдений, фарбуємо поля в зелений
+            firstNameInput.style.backgroundColor = '#d4edda';
+            lastNameInput.style.backgroundColor = '#d4edda';
+            deleteButton.disabled = false;
+        } else {
+            // Вчитель не знайдений, фарбуємо поля в червоний
+            firstNameInput.style.backgroundColor = '#f8d7da';
+            lastNameInput.style.backgroundColor = '#f8d7da';
+            deleteButton.disabled = true;
+
+            // Показуємо пропозиції, якщо вони є
+            if (result.suggestions && result.suggestions.length > 0) {
+                let suggestionsHtml = '<p>Можливо, ви мали на увазі:</p><ul>';
+                result.suggestions.forEach(suggestion => {
+                    suggestionsHtml += `<li style="cursor: pointer; color: #007bff;" onclick="fillTeacherFields('${suggestion.firstName}', '${suggestion.lastName}')">${suggestion.firstName} ${suggestion.lastName}</li>`;
+                });
+                suggestionsHtml += '</ul>';
+                suggestionsDiv.innerHTML = suggestionsHtml;
+            }
+        }
+    } catch (error) {
+        console.error('Помилка при перевірці вчителя:', error);
+        firstNameInput.style.backgroundColor = '#f8d7da';
+        lastNameInput.style.backgroundColor = '#f8d7da';
+        deleteButton.disabled = true;
+    }
+}
+
+// Функція для заповнення полів при виборі пропозиції для вчителя
+function fillTeacherFields(firstName, lastName) {
+    document.getElementById('deleteTeacherFirstName').value = firstName;
+    document.getElementById('deleteTeacherLastName').value = lastName;
+    checkTeacher(); // Повторно перевіряємо
+}
+
+async function deleteTeacher(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('deleteTeacherFirstName').value.trim();
+    const lastName = document.getElementById('deleteTeacherLastName').value.trim();
+
+    try {
+        const response = await fetch('/api/teachers/delete', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName: firstName, lastName: lastName })
+        });
+
+        if (response.ok) {
+            // Закриваємо модальне вікно
+            $.arcticmodal('close');
+
+            // Показуємо повідомлення про успіх
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = 'Вчитель успішно видалений';
+                notification.style.display = 'block';
+                notification.classList.add('show');
+
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            } else {
+                console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+            }
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Помилка при видаленні вчителя');
+        }
+    } catch (error) {
+        console.error('Помилка при видаленні вчителя:', error);
+
+        // Показуємо повідомлення про помилку
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = error.message || 'Помилка при видаленні вчителя';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+async function saveEvent(event) {
+    event.preventDefault();
+    const eventId = document.getElementById('eventId').value;
+    const title = document.getElementById('eventTitle').value;
+    const date = document.getElementById('eventDate').value;
+
+    if (!title || !date) {
+        alert('Будь ласка, заповніть обов’язкові поля (назва і дата)');
+        return;
+    }
+
+    const eventDate = new Date(date);
+    const year = eventDate.getFullYear();
+    const month = String(eventDate.getMonth() + 1).padStart(2, '0');
+    const day = String(eventDate.getDate()).padStart(2, '0');
+    const hours = String(eventDate.getHours()).padStart(2, '0');
+    const minutes = String(eventDate.getMinutes()).padStart(2, '0');
+    const seconds = String(eventDate.getSeconds()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    const eventData = {
+        title: title,
+        date: formattedDate
+    };
+
+    try {
+        let response;
+        if (eventId) {
+            response = await fetch(`/api/events/${eventId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(eventData)
+            });
+        } else {
+            response = await fetch('/api/events', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(eventData)
+            });
+        }
+
+        if (response.ok) {
+            await calendarInstance.fetchEvents();
+            calendarInstance.showcurr();
+            $.arcticmodal('close');
+        } else {
+            alert('Помилка при збереженні події');
+        }
+    } catch (error) {
+        console.error('Помилка при відправці запиту:', error);
+        alert('Помилка при збереженні події');
+    }
+}
+
+async function saveTeacher(event) {
+    event.preventDefault();
+    
+    const login = document.getElementById('teacherLogin').value.trim();
+    const firstName = document.getElementById('teacherFirstName').value.trim();
+    const lastName = document.getElementById('teacherLastName').value.trim();
+    const teacherClass = document.getElementById('teacherClass').value;
+    const password = document.getElementById('teacherPassword').value.trim();
+
+    if (!login || !firstName || !lastName || !teacherClass || !password) {
+        alert('Будь ласка, заповніть усі обов’язкові поля (логін, ім’я, прізвище, клас, пароль)');
+        return;
+    }
+
+    const teacherData = {
+        login: login,
+        firstName: firstName,
+        lastName: lastName,
+        class: teacherClass,
+        password: password
+    };
+
+    try {
+        const response = await fetch('/api/teachers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(teacherData)
+        });
+
+        if (response.ok) {
+            $.arcticmodal('close');
+
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = 'Вчитель успішно доданий';
+                notification.style.display = 'block';
+                notification.classList.add('show');
+
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 3000);
+            } else {
+                console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+            }
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Помилка при додаванні вчителя');
+        }
+    } catch (error) {
+        console.error('Помилка при відправці запиту:', error);
+        
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = error.message || 'Помилка при додаванні вчителя';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+async function deleteEvent(eventId) {
+    try {
+        const response = await fetch(`/api/events/${eventId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) {
+            throw new Error('Помилка при видаленні події');
+        }
+
+        await calendarInstance.fetchEvents();
+        calendarInstance.showcurr();
+        $.arcticmodal('close');
+
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = 'Подія успішно видалена';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    } catch (error) {
+        console.error('Помилка при видаленні події:', error);
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = 'Помилка при видаленні події';
+            notification.style.background = '#dc3545';
+            notification.style.display = 'block';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.background = '#28a745';
+                }, 300);
+            }, 3000);
+        } else {
+            console.warn('Елемент #notification не знайдений у DOM. Перевірте HTML.');
+        }
+    }
+}
+
+// Ініціалізація календаря
+const calendarInstance = new Cal('divCal');
+
+// Завантажуємо події та відображаємо календар
+calendarInstance.fetchEvents().then(() => {
+    calendarInstance.showcurr();
+});
+
+// Прив’язка подій до кнопок
+document.getElementById('btnPrev').addEventListener('click', () => calendarInstance.previousMonth());
+document.getElementById('btnNext').addEventListener('click', () => calendarInstance.nextMonth());
+document.querySelector('.podii-2').addEventListener('click', (e) => {
+    e.preventDefault();
+    calendarInstance.showAllEvents();
+});
+document.querySelector('.admin-general-event').addEventListener('click', (e) => {
+    e.preventDefault();
+    showEventForm();
+});
+document.querySelector('.add-admin').addEventListener('click', (e) => {
+    e.preventDefault();
+    showAddAdminForm();
+});
+document.querySelector('.delete-admin').addEventListener('click', (e) => {
+    e.preventDefault();
+    showDeleteAdminForm();
+});
+document.querySelector('.add-teacher').addEventListener('click', (e) => {
+    e.preventDefault();
+    showAddTeacherForm();
+});
+document.querySelector('.delete-teacher').addEventListener('click', (e) => {
+    e.preventDefault();
+    showDeleteTeacherForm();
+});
+document.querySelector('.view-rights').addEventListener('click', (e) => {
+    e.preventDefault();
+    showUserRights();
+});
+    </script>
+
+<script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/slick.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/parallax-bg.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.arcticmodal-0.3.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery.validate.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+</div>
+{% endblock %}

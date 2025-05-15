@@ -1,0 +1,1440 @@
+/* ///// Специфікації ///// */
+
+@font-face {
+    font-family: 'OpenSansRegular';
+    src: url('../fonts/OpenSansRegular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/OpenSansRegular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/OpenSansRegular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/OpenSansRegular.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/OpenSansRegular.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/OpenSansRegular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('../fonts/OpenSansBold.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/OpenSansBold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/OpenSansBold.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/OpenSansBold.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/OpenSansBold.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/OpenSansBold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #4d4b4b;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+ul, li {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+div, p, a, span, button, form {
+    box-sizing: border-box;
+}
+
+a, a:hover {
+    text-decoration: none;
+    border: none;
+    outline: none;
+    color: #8b3b59;
+}
+
+input, input:hover, input:focus, input:active,
+button, button:hover, button:focus, button:active,
+textarea {
+    outline: none;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff00;
+}
+
+.header-back {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffffa3;
+}
+
+.mail-link, .tel-link {
+    color: #830b39;
+}
+
+/* ///////////// Шапка сайту ////////////// */
+
+.header {
+    background: linear-gradient(to bottom right, #64e1ff, #ff8399);
+    padding: 10px 0;
+}
+
+
+.notification {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 16px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+
+.logo {
+    max-width: 65px;
+}
+
+input {
+    width: 100%;
+}
+
+.p-2 {
+    padding: .3rem !important;
+}
+
+.menu__registr, .menu__exit {
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: white;
+    background-color: #ed377c;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: inline-block;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.menu__item {
+    margin: 0px 5px;
+}
+
+.menu__item a:hover {
+    color: #000;
+    transition: 0.3s ease;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: white;
+    border-radius: 30px;
+    border: 1px solid white;
+    padding: 0px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #ed377c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-button:hover {
+    background: #d33a74;
+}
+
+/* ///////////// Офер/Інформація ////////////// */
+
+.offer {
+    position: relative;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: url(../img/toys-308176_1920.jpg) no-repeat top center /cover;
+}
+
+.offer-title {
+    text-align: center;
+}
+
+.offer-desc {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 22px;
+}
+
+/* ///////////// Календар та слайдер ////////////// */
+
+.cal, .cal-2 {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.slide-block__img {
+    width: 100%;
+}
+
+td {
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #dcdcff;
+    width: 52px;
+}
+
+thead td {
+    border: none;
+    color: #28283b;
+    text-transform: uppercase;
+    font-size: 1.5em;
+}
+
+td.not-current {
+    color: #c0c0c0;
+}
+
+/* //////////// підсвічування дня ////////////// */
+
+.event-day {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+}
+
+.past-event-day {
+    background-color: #dc3545; /* Червоний */
+    color: white;
+    border-radius: 5px;
+}
+
+td.today {
+    font-weight: 700;
+    color: #28283b;
+    font-size: 1.5em;
+    background: rgb(40 40 59 / 14%); /* Світло-сірий */
+    border-radius: 5px;
+}
+
+/* Стиль для комбінації: сьогоднішній день із подією */
+td.today.event-day {
+    background: linear-gradient(to right, rgb(40 40 59 / 14%) 50%, #28a745 50%);
+    color: white;
+    border-radius: 5px;
+}
+
+td.today.past-event-day {
+    background: linear-gradient(to right, rgb(40 40 59 / 14%) 50%, #dc3545 50%);
+    color: white;
+    border-radius: 5px;
+}
+
+#btnPrev {
+    float: left;
+}
+
+#btnPrev:before {
+    content: '\f104';
+    font-family: FontAwesome;
+    padding-right: 4px;
+}
+
+#btnNext {
+    float: right;
+    margin-bottom: 10px;
+}
+
+#btnNext:after {
+    content: '\f105';
+    font-family: FontAwesome;
+    padding-left: 4px;
+}
+
+#btnPrev,
+#btnNext {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #c0c0c0;
+    cursor: pointer;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+#btnPrev:hover,
+#btnNext:hover {
+    color: #28283b;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 38px;
+}
+
+tr {
+    height: 40px;
+}
+
+.but-block {
+    display: block;
+}
+
+.desc-date-in {
+    width: 250px;
+    padding: 10px;
+    display: block;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 0 auto;
+    color: #2f2e2e;
+    font-family: 'OpenSansBold';
+}
+
+.podii, .podii-2 {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    width: 100%;
+    height: 38px;
+    background: #e1e1e3;
+    cursor: pointer;
+}
+
+.slick-prev:before {
+    content: '';
+}
+
+.slick-next:before {
+    content: '';
+}
+
+.fa-angle-left:before {
+    content: "\f104";
+    font-size: 40px;
+    color: #000;
+    font-weight: 900;
+}
+
+.fa-angle-right:before {
+    content: "\f105";
+    font-size: 40px;
+    color: #000;
+    font-weight: 900;
+}
+
+.fa-angle-left:hover:before, .fa-angle-right:hover:before {
+    color: #777;
+}
+
+.slick-prev, .slick-next {
+    top: 50%;
+    margin-top: -25px;
+}
+
+.slick-prev {
+    left: -8px;
+}
+
+.slick-next {
+    right: -8px;
+}
+
+.slick-prev:hover {
+    left: -10px;
+    transition: all 0.2s ease;
+}
+
+.slick-next:hover {
+    right: -10px;
+    transition: all 0.2s ease;
+}
+
+.slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 40px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ///////////// Підвал сайту ////////////// */
+
+.footer {
+    padding-top: 35px;
+    padding-bottom: 32px;
+    background: linear-gradient(to bottom right, #64e1ff, #ff8399);
+}
+
+.fa-envelope, .fa-phone-volume {
+    margin-right: 6px;
+}
+
+.social-icon img {
+    width: 30px;
+    margin: 0 8px;
+}
+
+/* ///////////// Кабінет вчителя / секція календар і учні ////////////// */
+
+.students-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.students-title h2 {
+    text-transform: uppercase;
+    font-size: 40px;
+    font-family: OpenSansBold;
+}
+
+.students-title p {
+    font-size: 24px;
+}
+
+.stud-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.stud-list-2 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.remove-student {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    width: 100%;
+    height: 38px;
+    margin-top: 24px;
+    background: #e1e1e3;
+    cursor: pointer;
+}
+
+.task-for-one, .task-for-group, .assessment {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    width: 100%;
+    height: 38px;
+    margin-top: 18px;
+    background: #e1e1e3;
+    cursor: pointer;
+}
+
+.general-event {
+    background: #e1e1e3;
+    padding: 8px;
+    width: 280px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.general-event-admin {
+    background: #e1e1e3;
+    padding: 8px;
+    width: 280px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* ///////////// Кабінет учня ////////////// */
+
+.avatar {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.desk-main {
+    display: flex;
+}
+
+.text-main {
+    margin-left: 40px;
+}
+
+.in-desk-info {
+    background: #e1e1e3;
+    padding: 8px;
+    display: block;
+    width: 180px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.date-main {
+    margin-bottom: 10px;
+    font-family: 'OpenSansBold';
+}
+
+.date-main-main {
+    margin-left: 8px;
+}
+
+.desk-main-text {
+    font-family: 'OpenSansBold';
+}
+
+.rating-and-comment {
+    position: relative;
+    background: url(../img/child-865116_1920.jpg) no-repeat center;
+}
+
+.rating-and-comment, .rating-and-comment-gr {
+    padding: 20px 0px;
+}
+
+.rating-and-comment h3, .rating-and-comment-gr h3 {
+    margin-bottom: 12px;
+}
+
+.titel-h3 {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.title-date {
+    color: red;
+    font-size: 18px;
+    margin-left: 8px;
+}
+
+.date-of-birth {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.info-student-form {
+    width: 100%;
+    height: 100px;
+}
+
+.info-in-back {
+    border: none;
+    background: #2edf8f;
+    padding: 10px;
+    width: 280px;
+    margin-top: 25px;
+}
+
+/* ///////////// Кабінет батьків ////////////// */
+
+.title-b {
+    padding: 40px 0px;
+    background: url(../img/boys-286245_1920.jpg) no-repeat center;
+    position: relative;
+}
+
+.title-b h2 {
+    font-size: 50px;
+    text-align: center;
+}
+
+.title-b p {
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+.student-item-link a {
+    color: #1a1a1a;
+}
+
+.student-item-link a:hover {
+    color: #888888;
+}
+
+/* ///// Модальне вікно - стандартні стилі за умовчанням ///// */
+.box-modal {
+    position: relative;
+    width: 500px;
+    padding: 16px;
+    background: url(../img/white-1209552_1920.jpg) center / cover;
+    color: #3c3c3c;
+    font: 14px/18px Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+    box-shadow: 0 0 0 6px rgba(153, 153, 153, .3);
+    border-radius: 6px;
+}
+
+.box-modal_close { 
+    position: absolute; 
+    right: 10px; 
+    top: 6px; 
+    font-size: 11px; 
+    line-height: 15px; 
+    color: #999; 
+    cursor: pointer; 
+}
+
+.box-modal_close:hover { 
+    color: #666; 
+}
+
+.box-modal .date {
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.box-modal .event-details {
+    text-align: center;
+}
+
+.box-modal .event-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 20px 0;
+    color: #333;
+}
+
+.box-modal .event-desc {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.box-modal .desc-date {
+    font-size: 16px;
+    color: #888;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Стилі для списку подій у exampleModal-4 */
+.box-modal .list-event {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.box-modal .list-event li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    background-color: #ffdddd; /* Рожевий фон для всіх елементів за замовчуванням */
+}
+
+.box-modal .list-event li.activ-event-day {
+    background-color: #d4edda; /* Зелений фон для активних подій */
+}
+
+.box-modal .list-event li p:first-child {
+    width: 40px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.box-modal .list-event li p:last-child {
+    flex: 1;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+/* ///// Модальне вікно - додати подію стиль ///// */
+
+.event-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.event-modal h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.event-modal input,
+.event-modal textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.event-modal textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.event-modal .add-p {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.event-modal .event-modal_close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+}
+
+/* ///// Модальне вікно - користувацькі стилі ///// */
+
+.modal-input {
+    height: 38px;
+    width: 100%;
+    margin: 24px 0 0px;
+}
+
+.modal-button {
+    height: 38px;
+    width: 246px;
+    margin: 0 auto;
+    margin-top: 40px;
+    border: none;
+    background: #6ef373;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid #bbbaba;
+}
+
+.close {
+    width: 18px;
+    opacity: 1;
+}
+
+.class, .class-2 {
+    height: 40px;
+    width: 100%;
+    margin-top: 26px;
+    border: none;
+    outline: none;
+}
+
+.class-2 {
+    margin-top: 52px;
+}
+
+.container-radio {
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.radio {
+    flex-direction: column;
+}
+
+.radio-text {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+#radio-1, #radio-2, #radio-3 {
+    width: 24px;
+    height: 24px;
+    margin: auto;
+}
+
+.radio-label {
+    text-transform: uppercase;
+}
+
+#login-f1-error {
+    position: absolute;
+    top: 23px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#name-f1-error {
+    position: absolute;
+    top: 85px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#surname-f1-error {
+    position: absolute;
+    top: 147px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#tel-f1-error {
+    position: absolute;
+    top: 209px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#pass-f1-error {
+    position: absolute;
+    top: 567px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#name-f2-error {
+    position: absolute;
+    top: 23px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+#pass-f2-error {
+    position: absolute;
+    top: 86px;
+    font-size: 11px;
+    color: #f53030;
+}
+
+/* Прибираємо зайві стилі, які не використовуються */
+.event-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 20px 0;
+    color: #333;
+    text-align: center;
+}
+
+.event-desc {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.desc-date {
+    font-size: 16px;
+    color: #888;
+    font-style: italic;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.activ-event-day {
+    color: #3cb535;
+}
+
+.desk-task {
+    width: 100%;
+    height: 100px;
+    margin-top: 25px;
+}
+
+.example_task-date {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.example_task-date span input {
+    display: block;
+    border: 1px solid;
+    width: 290px;
+    padding: 8px;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.student-item input {
+    width: 12px;
+    margin-right: 4px;
+}
+
+.st-task-gr {
+    margin-top: 14px;
+}
+
+.task-gr {
+    display: block;
+    width: 280px;
+    background: #2dcf77;
+    padding: 12px;
+    margin: 0 auto;
+    margin-top: 38px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #292828;
+    font-family: 'OpenSansBold';
+    cursor: pointer;
+}
+
+.warning {
+    position: absolute;
+    font-size: 11px;
+    line-height: 11px;
+    color: red;
+    top: 160px;
+}
+
+.grade {
+    width: 60px;
+    margin-left: 8px;
+}
+
+.grade-2 {
+    width: 60px;
+    margin-left: 8px;
+    display: block;
+    background: #dfdddd;
+    text-align: center;
+    padding: 4px;
+    color: #088701;
+}
+
+.teacher-evaluation {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.grade-block {
+    margin-top: 25px;
+}
+
+.task-grade, .delete, .add-p {
+    background: #2bd789;
+    padding: 10px;
+    display: block;
+    width: 280px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    color: #000;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.list-event .event-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 5px;
+}
+
+.list-event .event-item p:first-child {
+    width: 40px;
+    font-weight: bold;
+}
+
+.list-event .event-item p:last-child {
+    flex: 1;
+}
+
+.list-event .event-present {
+    background-color: rgba(40, 167, 69, 0.3);
+}
+
+.list-event .event-absent {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+/* Стилі з admin.html (перенесені та перейменовані) */
+
+.page-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+.admin-footer {
+    width: 100%;
+    background-color: #f8f9fa;
+}
+
+.button-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.admin-button {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    width: 100%;
+    max-width: 300px;
+    height: 38px;
+    margin-top: 24px;
+    background: #e1e1e3;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #8b3b59;
+}
+
+.admin-button:hover {
+    opacity: 0.9;
+}
+
+.calendar-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header button {
+    background: #e1e1e3;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.calendar-header button:hover {
+    opacity: 0.9;
+}
+
+.calendar-header span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.calendar-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.calendar-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.calendar-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.calendar-table .days td {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+.calendar-table .today {
+    background: #d3d3d3;
+}
+
+.calendar-table .event-day {
+    background: #ccffcc; /* Зелений для майбутніх подій */
+}
+
+.calendar-table .past-event-day {
+    background: #ff9999; /* Червоний для минулих подій */
+}
+
+.calendar-table .not-current {
+    color: #999;
+}
+
+.calendar-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.podii-2, .admin-general-event {
+    display: block;
+    background: #e1e1e3;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px; 
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.podii-2:hover, .admin-general-event:hover {
+    opacity: 0.9;
+}
+
+/* Стили для модального окна */
+.admin-box-modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 90%;
+    width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.admin-box-modal_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.admin-box-modal_close img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+}
+
+.admin-box-modal_close img:hover {
+    transform: rotate(90deg);
+}
+
+.date {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.date p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Стили для формы добавления события */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    font-size: 16px;
+}
+
+.input-box input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.input-box input:focus {
+    border-color: #8b3b59;
+    outline: none;
+    box-shadow: 0 0 5px rgba(139, 59, 89, 0.3);
+}
+
+.form .admin-form-button {
+    text-align: center;
+}
+
+.form .admin-form-button button {
+    background: #8b3b59;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.form .admin-form-button button:hover {
+    background: #6b2d47;
+}
+
+/* Стили для списка событий */
+.admin-list-event {
+    list-style: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.admin-list-event .event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s;
+}
+
+.admin-list-event .event-item:hover {
+    background-color: #f5f5f5;
+}
+
+.admin-list-event .event-present.past {
+    background: #ff9999;
+}
+
+.admin-list-event .event-present.future {
+    background: #ccffcc;
+}
+
+.admin-list-event .event-absent {
+    background: #f0f0f0;
+}
+
+.admin-list-event .event-item p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.admin-list-event .event-item .delete-btn {
+    background: #ff4444;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.admin-list-event .event-item .delete-btn:hover {
+    background: #cc0000;
+}
+
+/* Адаптивные стили */
+@media (max-width: 767px) {
+    .container {
+        padding: 10px;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .col-12, .col-md-4, .col-md-8 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .button-column {
+        align-items: center;
+    }
+    .admin-button {
+        max-width: 100%;
+        height: 34px;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+    .calendar-wrapper {
+        max-width: 100%;
+        padding: 5px;
+    }
+    .calendar-header {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    .calendar-header button {
+        padding: 4px 8px;
+        font-size: 14px;
+    }
+    .calendar-header span {
+        font-size: 16px;
+    }
+    .calendar-table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .calendar-buttons {
+        margin-top: 15px;
+    }
+    .podii-2, .admin-general-event {
+        max-width: 100%; 
+        padding: 6px;
+        font-size: 14px;
+    }
+    .admin-box-modal {
+        width: 90%;
+        max-height: 70vh;
+        padding: 15px;
+        margin: 10px auto;
+    }
+    .admin-box-modal h2 {
+        font-size: 18px;
+    }
+    .date p {
+        font-size: 18px;
+    }
+    .input-box label {
+        font-size: 14px;
+    }
+    .input-box input {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .form .admin-form-button button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    .admin-list-event .event-item {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .admin-list-event .event-item p {
+        font-size: 14px;
+    }
+    .admin-list-event .event-item .delete-btn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-table td {
+        padding: 4px;
+        font-size: 10px;
+    }
+    .calendar-header button {
+        padding: 3px 6px;
+        font-size: 12px;
+    }
+    .calendar-header span {
+        font-size: 14px;
+    }
+    .admin-button {
+        font-size: 12px;
+        height: 30px;
+    }
+    .podii-2, .admin-general-event {
+        font-size: 12px;
+        padding: 5px;
+    }
+    .admin-box-modal {
+        width: 95%;
+        max-height: 60vh;
+        padding: 10px;
+        margin: 5px auto;
+    }
+    .admin-box-modal h2 {
+        font-size: 16px;
+    }
+    .date p {
+        font-size: 16px;
+    }
+    .input-box label {
+        font-size: 12px;
+    }
+    .input-box input {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .form .admin-form-button button {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+    .admin-list-event .event-item {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .admin-list-event .event-item p {
+        font-size: 12px;
+    }
+    .admin-list-event .event-item .delete-btn {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}

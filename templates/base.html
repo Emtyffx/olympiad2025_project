@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk-UA">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}{% endblock %}</title>
+	<meta name="description" content="Комунальний заклад 'Татарбунарський будинок дитячої та юнацької творчості'">
+	<meta name="keywords" content="Комунальний заклад 'Татарбунарський будинок дитячої та юнацької творчості' Татарбунарської міської ради Одеської області">
+	<!-- Favicon -->
+	<link rel="icon" href="{{url_for('static', filename='img/БДЮТ кол.png')}}" type="image/x-icon">
+ 	<link rel="shortcut icon" href="{{url_for('static', filename='img/low.png')}}" type="image/x-icon">
+	<!-- OG Tags -->
+	<meta property="og:title" content="БДЮТ">
+	<meta property="og:description" content="Комунальний заклад БДЮТ">
+	<meta property="og:type" content="article">
+	<meta property="og:image" content="https://вставить ссылку на картинку из хостинга">
+	<meta property="og:site_name" content="Татарбунарський будинок дитячої та юнацької творчості">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- font-family: 'Roboto', sans-serif; -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/font-awesome.min.css')}}">
+	<!-- Слайдер -->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/slick.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/slick-theme.css')}}">
+
+	<!-- Pop-up window css -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/jquery.arcticmodal-0.3.css')}}">
+	<!-- CSS Styles -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+	<!-- Гарний дизайн вибору дати/часу -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/media.css')}}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+
+<body>
+	{% block content %}{%endblock %}
+	  
+	  <footer class="footer" id="footer">
+		<div class="container">
+			<div class="row">
+				<div class=" col-f col-12">
+					<div class="copyright d-flex justify-content-between">
+						<a href=""><i class="fa fa-phone-volume"></i>+38 (097) 77-77-777</a>
+						<ul class="d-flex icon-soc">
+							<li>
+								<a href="" class="social-icon">
+									<img src="{{url_for('static', filename='img/inst.png')}}" alt="Instagram">
+								</a>
+							</li>
+							<li>
+								<a href="" class="social-icon">
+									<img src="{{url_for('static', filename='img/yutub.png')}}" alt="yutub">
+								</a>
+							</li>
+							<li>
+								<a href="" class="social-icon">
+									<img src="{{url_for('static', filename='img/fb.png')}}" alt="Facebook">
+								</a>
+							</li>
+							<li>
+								<a href="" class="social-icon">
+									<img src="{{url_for('static', filename='img/telega.png')}}" alt="Telega">
+								</a>
+							</li>
+						</ul>
+						<a class="mail-link" href=""><i class="fa fa-envelope"></i>tatbdt@gmail.com</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	  
+	{% block ModalWindows %}{%endblock %}
+	<!-- JQuery -->
+	<script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+	<!-- slick -->
+	<script type="text/javascript" src="{{url_for('static', filename='js/slick.min.js')}}"></script>
+	<!-- Parallax -->
+	<script type="text/javascript" src="{{url_for('static', filename='js/parallax-bg.js')}}"></script>
+	<!-- Pop-up window js -->
+	<script src="{{url_for('static', filename='js/jquery.arcticmodal-0.3.min.js')}}"></script>
+	<!-- Validate -->
+	<script type="text/javascript" src="{{url_for('static', filename='js/jquery.validate.js')}}"></script>
+	<!-- Main JS -->
+	<script src="{{url_for('static', filename='js/main.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/calendar.js')}}"></script>
+	
+</body>
+</html>
+

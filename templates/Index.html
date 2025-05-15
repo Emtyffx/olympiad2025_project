@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Головна сторінка
+{% endblock %}
+
+{% block content %}
+	<header class="header" id="header">
+		<div class="container">
+			<div class="row d-flex align-items-center">	
+				<div class="col-3 col-md-4 col-lg-2">
+		  			<a href="index">
+						<img class="img-fluid logo" src="{{url_for('static', filename='img/low.png')}}" alt="logo">
+		  			</a>
+				</div>
+				<!-- Поле пошуку -->
+				<div class="col-9 serh d-lg-flex col-md-8 col-lg-7 flex items-center">
+					<div class="search-wrapper">
+					  	<input type="text" placeholder="Пошук..." class="search-input" />
+					  	<button class="search-button">🔍</button>
+					</div>
+				</div>
+				<div class="col-12 reg-in col-md-12 d-lg-flex col-lg-3 justify-content-end align-items-center menu-collapse">
+		  			<!-- Меню -->
+		  			<nav class="menu">
+						<ul class="menu__list d-flex">
+							<li class="menu__item">
+								<a class="menu__registr" href="#">Реестрація</a>
+							</li>
+							<li class="menu__item">
+								<a class="menu__exit" href="#">Вхід</a>
+							</li>
+						</ul>
+		  			</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section class="offer" id="offer" data-type="background" data-speed="5">
+		<div class="header-back">
+			
+		</div>
+		<div class="back">
+			
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h1 class="offer-title">
+						Комунальний заклад <br>
+						"Татарбунарський будинок дитячої та юнацької творчості" <br>
+						Татарбунарської  міської  ради  Одеської  області
+					</h1>
+					<p class="offer-desc">
+						Будинок творчості, наш рідний дім,<br>
+						Гостинно двері ти нам відчиняєш.<br>
+						Зігріті ми любов'ю і теплом твоїм,<br>
+						Прекрасними людьми<br>
+						У стінах цих зростаєм.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="cal">
+		<div class="container">
+			<div class="row">
+				<div class="center d-flex col-sm-12 col-md-6"> 
+					<div class="calendar-wrapper">
+						<div class="calendar-header">
+							<button id="btnPrev" type="button">Попередній</button>
+							<span id="monthYear"></span>
+							<button id="btnNext" type="button">Наступний</button>
+						</div>
+						<div id="divCal" class="calendar-table">
+							
+						</div>
+						<div class="calendar-buttons">
+							<a href="#" class="podii-2">Всі події цього місяця</a>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex col-sm-12 col-md-6 main-slide m-auto">
+					<div class="slide-block">
+						<img src="{{url_for('static', filename='img/photo_2024-12-26_23-22-22.jpg')}}" class="slide-block__img">
+					</div>
+					<div class="slide-block">
+						<img src="{{url_for('static', filename='img/002.jpg')}}" class="slide-block__img">
+					</div>
+					<div class="slide-block">
+						<img src="{{url_for('static', filename='img/003.jpg')}}" class="slide-block__img">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block ModalWindows %}
+	<!-- Модальні вікна -->
+	<div style="display: none;"> <!-- Вікно реестрації -->
+		<div class="box-modal" id="exampleModal-1">
+			<div class="box-modal_close arcticmodal-close">
+				<img src="{{url_for('static', filename='img/close.png')}}">
+			</div>
+			<form method="POST" action="{{ url_for('register') }}" class="modal-1__form d-flex flex-column js-form" id="popupResult-1">
+				<div class="modal-1__block-input d-flex flex-column">
+					<input id="name-f1" class="modal-input" type="text" name="name" placeholder="Ім'я користувача" required>
+					<input id="surname-f1" class="modal-input" type="text" name="surname" placeholder="Призвіще" required>
+					<input id="tel-f1" class="modal-input" type="text" name="tel" placeholder="Телефон" required>
+					<select name="clas" class="class"  required>
+						<option value="0">Оберіть клас!</option>
+						<option value="1">Клас 1</option>
+						<option value="2">Клас 2</option>
+						<option value="3">Клас 3</option>
+						<option value="4">Клас 4</option>
+						<option value="5">Клас 5</option>
+						<option value="6">Клас 6</option>
+						<option value="3">Клас 7</option>
+						<option value="4">Клас 8</option>
+						<option value="5">Клас 9</option>
+						<option value="6">Клас 10</option>
+						<option value="6">Клас 11</option>
+					</select>
+					<p class="radio-text">Хто ви?<br>Зробіть свій вибір!</p>
+					<select name="role" class="class" required>
+						<option value="student">Учень</option>
+						<option value="parent">Батьки</option>
+					</select>
+					<input id="login-f1" class="modal-input" type="text" name="login" placeholder="Ваш e-mail" required>
+					<input type="password" id="pass-f1" class="modal-input" name="password" minlength="6" placeholder="Введіть пароль" required>
+					<button class="button modal-button" type="data-submit">Реєструватися</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div style="display: none;"> <!-- Вікно входу -->
+		<div class="box-modal" id="exampleModal-2">
+			<div class="box-modal_close arcticmodal-close">
+				<img src="{{url_for('static', filename='img/close.png')}}" class="close">
+			</div>
+			<form method="POST" action="{{ url_for('login') }}" class="modal-2__form d-flex flex-column js-form" id="popupResult-2">
+				<div class="modal-2__block-input d-flex flex-column">
+					<input id="name-f2" class="modal-input" type="text" name="login" placeholder="Ваш e-mail">
+					<input type="password" id="pass-f2" class="modal-input" name="password" minlength="6" placeholder="Введіть пароль">
+				</div>
+				<button class="button modal-button" data-submit>Увійти</button>
+			</form>
+		</div>
+	</div>
+
+	<div style="display: none;">  <!-- Вікно кліка на дні у календарі -->
+		<div class="box-modal" id="exampleModal-3">
+			<div class="box-modal_close arcticmodal-close">
+				<img src="{{url_for('static', filename='img/close.png')}}" class="close">
+			</div>
+			<div>
+				<div class="date">
+					<p id="selectedDate"></p>
+				</div>
+				<div class="desc-date" id="eventDetails">
+					<p>Події відсутні</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="display: none;">	<!-- Вікно усіх загальних подій -->
+		<div class="box-modal" id="exampleModal-4">
+			<div class="box-modal_close arcticmodal-close">
+				<img src="{{url_for('static', filename='img/close.png')}}" class="close">
+			</div>
+			<div class="date">
+				<p id="currentMonth"></p>
+			</div>
+			<ul class="list-event" id="eventList"></ul>
+		</div>
+	</div>
+	<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999;">
+		
+	</div>
+{% endblock %}
